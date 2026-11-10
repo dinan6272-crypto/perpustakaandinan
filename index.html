@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RuangBaca — Perpustakaan Digital</title>
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--ink:#172033;--muted:#748096;--primary:#5b5bd6;--soft:#eeeeff;--line:#e8ebf2;--green:#16865b;--red:#d14d5b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--ink)}
+.layout{display:flex;min-height:100vh}.sidebar{width:245px;background:#171a2b;color:#fff;padding:28px 18px;flex-shrink:0}
+.brand{font-size:22px;font-weight:800;letter-spacing:.2px;margin:4px 10px 38px}.brand span{color:#a9a9ff}
+.nav-label{color:#9298b1;font-size:11px;text-transform:uppercase;letter-spacing:1.5px;margin:24px 12px 10px}
+.nav{display:flex;align-items:center;gap:12px;padding:12px;border-radius:10px;color:#c8cce0;margin:4px 0;font-size:14px}
+.nav.active,.nav:hover{background:#30334d;color:white}.nav .ico{width:20px;text-align:center}
+.side-note{margin:50px 8px 0;padding:15px;border:1px solid #383b55;border-radius:12px;color:#b9bfd4;font-size:12px;line-height:1.6}
+main{flex:1;padding:32px 4.5%;max-width:1600px;margin:auto;width:100%}
+.top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:28px}
+h1{font-size:27px;margin:0 0 6px}.sub{color:var(--muted);font-size:14px}
+.profile{display:flex;align-items:center;gap:10px;font-size:13px}.avatar{width:38px;height:38px;border-radius:50%;background:#e5e5ff;color:var(--primary);display:grid;place-items:center;font-weight:800}
+.actions{display:flex;gap:10px;align-items:center}.btn{border:0;border-radius:9px;padding:11px 15px;font-weight:650;cursor:pointer;font-size:13px}.primary{background:var(--primary);color:#fff}.secondary{background:var(--soft);color:var(--primary)}.btn:hover{filter:brightness(.97)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-bottom:26px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:19px}.stat-top{display:flex;justify-content:space-between;color:var(--muted);font-size:13px}.stat-icon{width:34px;height:34px;border-radius:10px;background:var(--soft);display:grid;place-items:center;color:var(--primary)}
+.stat strong{display:block;font-size:27px;margin-top:12px}.stat small{color:var(--muted);font-size:12px}
+.section-head{display:flex;justify-content:space-between;align-items:center;gap:15px;margin:30px 0 16px}.section-head h2{font-size:18px;margin:0}
+.tools{display:flex;gap:9px;flex-wrap:wrap}.search{width:260px;max-width:100%;border:1px solid var(--line);border-radius:9px;padding:10px 12px;background:#fff;font-size:13px;outline:none}
+select{border:1px solid var(--line);border-radius:9px;padding:10px;background:#fff;color:var(--ink);font-size:13px}
+.books{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.book{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;min-width:0}
+.cover{height:155px;border-radius:10px;display:flex;align-items:center;justify-content:center;text-align:center;padding:18px;color:white;font-weight:750;font-size:17px;line-height:1.3;box-shadow:inset 0 -25px 45px #0002}
+.book h3{font-size:14px;margin:13px 0 5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.author{color:var(--muted);font-size:12px}
+.meta{display:flex;justify-content:space-between;align-items:center;margin-top:13px;gap:6px}.tag{font-size:10px;padding:5px 8px;border-radius:20px;background:#f0f2f7;color:#657087}.available{color:var(--green);font-size:11px;font-weight:700}.borrowed{color:var(--red);font-size:11px;font-weight:700}
+.book-actions{display:flex;gap:7px;margin-top:12px}.book-actions button{flex:1;padding:8px 5px;font-size:11px}
+.empty{grid-column:1/-1;background:white;border:1px dashed #ccd2df;border-radius:14px;padding:35px;text-align:center;color:var(--muted)}
+footer{text-align:center;color:#9aa2b2;font-size:11px;margin:35px 0 10px}
+.modal-back{position:fixed;inset:0;background:#11182788;display:none;align-items:center;justify-content:center;padding:18px;z-index:5}.modal-back.show{display:flex}.modal{width:100%;max-width:440px;background:#fff;border-radius:16px;padding:23px;box-shadow:0 20px 70px #0003}
+.modal h2{margin:0 0 18px;font-size:20px}.field{margin:12px 0}.field label{display:block;font-size:12px;font-weight:700;margin-bottom:6px}.field input,.field select{width:100%;padding:11px;border:1px solid var(--line);border-radius:8px;font-size:13px}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:20px}
+@media(max-width:1100px){.books{grid-template-columns:repeat(3,1fr)}.stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:760px){.sidebar{width:62px;padding:20px 8px}.brand{font-size:0;margin:5px 8px 35px}.brand:first-letter{font-size:22px}.nav{justify-content:center;padding:12px 4px}.nav .navtext,.nav-label,.side-note{display:none}.nav .ico{font-size:18px}main{padding:24px 16px}.books{grid-template-columns:repeat(2,minmax(0,1fr))}.top{align-items:flex-start}.profile .who{display:none}.section-head{align-items:flex-start;flex-direction:column}}
+@media(max-width:430px){.books{grid-template-columns:1fr 1fr;gap:9px}.book{padding:9px}.cover{height:125px;font-size:14px}.stats{gap:9px}.stat{padding:13px}.stat strong{font-size:22px}.search{width:100%}.tools{width:100%}.tools select{flex:1}}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <div class="brand">Ruang<span>Baca.</span></div>
+  <div class="nav-label">Menu utama</div>
+  <div class="nav active"><span class="ico">▦</span><span class="navtext">Dashboard</span></div>
+  <div class="nav"><span class="ico">▤</span><span class="navtext">Koleksi Buku</span></div>
+  <div class="nav"><span class="ico">⇄</span><span class="navtext">Peminjaman</span></div>
+  <div class="nav-label">Lainnya</div>
+  <div class="nav"><span class="ico">⚙</span><span class="navtext">Pengaturan</span></div>
+  <div class="side-note">Temukan pengetahuan baru setiap hari. Selamat membaca! 📚</div>
+</aside>
+<main>
+  <header class="top">
+    <div><h1>Perpustakaan Digital</h1><div class="sub">Selamat datang! Kelola koleksi dan peminjaman buku dengan mudah.</div></div>
+    <div class="profile"><div class="avatar">A</div><div class="who"><b>Admin Perpustakaan</b><div class="sub">Administrator</div></div></div>
+  </header>
+  <div class="stats">
+    <div class="stat"><div class="stat-top">Total Koleksi <span class="stat-icon">▤</span></div><strong id="total">0</strong><small>Buku terdaftar</small></div>
+    <div class="stat"><div class="stat-top">Tersedia <span class="stat-icon">✓</span></div><strong id="available">0</strong><small>Siap dipinjam</small></div>
+    <div class="stat"><div class="stat-top">Dipinjam <span class="stat-icon">⇄</span></div><strong id="borrowed">0</strong><small>Sedang dipinjam</small></div>
+    <div class="stat"><div class="stat-top">Kategori <span class="stat-icon">▦</span></div><strong id="categories">0</strong><small>Kategori buku</small></div>
+  </div>
+  <div class="section-head">
+    <div><h2>Koleksi Buku</h2><div class="sub" style="margin-top:5px">Jelajahi dan kelola buku perpustakaan.</div></div>
+    <div class="actions"><button class="btn primary" onclick="openModal()">＋ Tambah Buku</button></div>
+  </div>
+  <div class="tools">
+    <input class="search" id="search" placeholder="Cari judul atau penulis..." oninput="render()">
+    <select id="category" onchange="render()"><option value="">Semua kategori</option></select>
+    <select id="status" onchange="render()"><option value="">Semua status</option><option value="available">Tersedia</option><option value="borrowed">Dipinjam</option></select>
+  </div>
+  <div class="books" id="books" style="margin-top:16px"></div>
+  <footer>© 2026 RuangBaca — Perpustakaan Digital</footer>
+</main>
+</div>
+<div class="modal-back" id="modal">
+ <div class="modal">
+  <h2 id="modalTitle">Tambah Buku</h2>
+  <form id="bookForm">
+   <input type="hidden" id="bookId">
+   <div class="field"><label>Judul buku</label><input id="title" required placeholder="Contoh: Laskar Pelangi"></div>
+   <div class="field"><label>Nama penulis</label><input id="author" required placeholder="Nama penulis"></div>
+   <div class="field"><label>Kategori</label><select id="cat" required><option value="">Pilih kategori</option><option>Fiksi</option><option>Nonfiksi</option><option>Pendidikan</option><option>Teknologi</option><option>Sejarah</option><option>Agama</option><option>Komik</option><option>Lainnya</option></select></div>
+   <div class="field"><label>Tahun terbit</label><input id="year" type="number" min="1000" max="2100" placeholder="2025"></div>
+   <div class="modal-actions"><button type="button" class="btn secondary" onclick="closeModal()">Batal</button><button class="btn primary" type="submit">Simpan Buku</button></div>
+  </form>
+ </div>
+</div>
+<script>
+const seed=[
+ {id:1,title:"Laskar Pelangi",author:"Andrea Hirata",cat:"Fiksi",year:2005,status:"available",color:"linear-gradient(140deg,#0e7490,#164e63)"},
+ {id:2,title:"Bumi Manusia",author:"Pramoedya Ananta Toer",cat:"Sejarah",year:1980,status:"borrowed",color:"linear-gradient(140deg,#92400e,#451a03)"},
+ {id:3,title:"Atomic Habits",author:"James Clear",cat:"Nonfiksi",year:2018,status:"available",color:"linear-gradient(140deg,#166534,#14532d)"},
+ {id:4,title:"Filosofi Teras",author:"Henry Manampiring",cat:"Nonfiksi",year:2018,status:"available",color:"linear-gradient(140deg,#6d28d9,#312e81)"},
+ {id:5,title:"Pemrograman Web",author:"Abdul Kadir",cat:"Teknologi",year:2022,status:"available",color:"linear-gradient(140deg,#1d4ed8,#172554)"},
+ {id:6,title:"Sejarah Indonesia",author:"R. Soekmono",cat:"Sejarah",year:2019,status:"borrowed",color:"linear-gradient(140deg,#be123c,#4c0519)"},
+ {id:7,title:"Pendidikan Pancasila",author:"Tim Penyusun",cat:"Pendidikan",year:2024,status:"available",color:"linear-gradient(140deg,#0f766e,#042f2e)"},
+ {id:8,title:"Ensiklopedia Islam",author:"Tim Ahli",cat:"Agama",year:2021,status:"available",color:"linear-gradient(140deg,#a16207,#422006)"}
+];
+let books=JSON.parse(localStorage.getItem("ruangbaca_books")||"null")||seed;
+const colors=["linear-gradient(140deg,#0e7490,#164e63)","linear-gradient(140deg,#92400e,#451a03)","linear-gradient(140deg,#166534,#14532d)","linear-gradient(140deg,#6d28d9,#312e81)","linear-gradient(140deg,#1d4ed8,#172554)","linear-gradient(140deg,#be123c,#4c0519)"];
+function save(){localStorage.setItem("ruangbaca_books",JSON.stringify(books))}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function render(){
+ const q=document.getElementById("search").value.toLowerCase(),cat=document.getElementById("category").value,st=document.getElementById("status").value;
+ document.getElementById("total").textContent=books.length;
+ document.getElementById("available").textContent=books.filter(b=>b.status==="available").length;
+ document.getElementById("borrowed").textContent=books.filter(b=>b.status==="borrowed").length;
+ document.getElementById("categories").textContent=new Set(books.map(b=>b.cat)).size;
+ const cats=[...new Set(books.map(b=>b.cat))].sort(),sel=document.getElementById("category"),old=sel.value;
+ sel.innerHTML='<option value="">Semua kategori</option>'+cats.map(c=>`<option>${esc(c)}</option>`).join("");sel.value=cats.includes(old)?old:"";
+ const list=books.filter(b=>(b.title+" "+b.author).toLowerCase().includes(q)&&(!cat||b.cat===cat)&&(!st||b.status===st));
+ document.getElementById("books").innerHTML=list.length?list.map((b,i)=>`
+ <article class="book">
+  <div class="cover" style="background:${b.color||colors[i%colors.length]}">${esc(b.title)}</div>
+  <h3 title="${esc(b.title)}">${esc(b.title)}</h3><div class="author">${esc(b.author)} · ${b.year||"Tahun tidak dicantumkan"}</div>
+  <div class="meta"><span class="tag">${esc(b.cat)}</span><span class="${b.status}">${b.status==="available"?"● Tersedia":"● Dipinjam"}</span></div>
+  <div class="book-actions"><button class="btn secondary" onclick="toggleStatus(${b.id})">${b.status==="available"?"Pinjam":"Kembalikan"}</button><button class="btn secondary" onclick="editBook(${b.id})">Edit</button><button class="btn secondary" onclick="deleteBook(${b.id})" aria-label="Hapus">✕</button></div>
+ </article>`).join(""):'<div class="empty">📚<br><br>Buku tidak ditemukan. Coba kata kunci lain atau tambahkan buku baru.</div>';
+}
+function openModal(b){document.getElementById("modal").classList.add("show");document.getElementById("modalTitle").textContent=b?"Edit Buku":"Tambah Buku";document.getElementById("bookId").value=b?.id||"";document.getElementById("title").value=b?.title||"";document.getElementById("author").value=b?.author||"";document.getElementById("cat").value=b?.cat||"";document.getElementById("year").value=b?.year||""}
+function closeModal(){document.getElementById("modal").classList.remove("show")}
+function editBook(id){openModal(books.find(b=>b.id===id))}
+document.getElementById("bookForm").addEventListener("submit",e=>{e.preventDefault();const id=Number(document.getElementById("bookId").value),data={title:document.getElementById("title").value.trim(),author:document.getElementById("author").value.trim(),cat:document.getElementById("cat").value,year:document.getElementById("year").value};if(id){books=books.map(b=>b.id===id?{...b,...data}:b)}else{books.unshift({id:Date.now(),...data,status:"available",color:colors[Math.floor(Math.random()*colors.length)]})}save();render();closeModal()});
+function toggleStatus(id){books=books.map(b=>b.id===id?{...b,status:b.status==="available"?"borrowed":"available"}:b);save();render()}
+function deleteBook(id){if(confirm("Hapus buku ini dari koleksi?")){books=books.filter(b=>b.id!==id);save();render()}}
+render();
+</script>
+</body>
+</html>
