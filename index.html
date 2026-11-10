@@ -5,7 +5,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RuangBaca | Perpustakaan Digital</title>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
 :root {
   --primary:#2563eb;
@@ -17,58 +19,60 @@
   --border:#e2e8f0;
   --danger:#dc2626;
 }
-* {box-sizing:border-box;margin:0;padding:0}
-body {font-family:Arial,sans-serif;background:var(--bg);color:#1e293b}
-button {border:0;padding:11px 16px;border-radius:8px;background:var(--primary);color:white;cursor:pointer;font-weight:bold}
-button:hover {opacity:.85}
-button:disabled {opacity:.5;cursor:not-allowed}
-.secondary {background:#e2e8f0;color:#1e293b}
-.danger {background:var(--danger)}
-header {background:white;padding:18px 6%;display:flex;align-items:center;justify-content:space-between;gap:15px;box-shadow:0 2px 10px #0000000d;position:sticky;top:0;z-index:5}
-.logo {font-size:24px;color:var(--primary);font-weight:bold}
-nav {display:flex;gap:8px;flex-wrap:wrap}
-main {max-width:1400px;margin:auto;padding:30px 6%}
-.hero {background:linear-gradient(120deg,#1e40af,#60a5fa);color:white;padding:48px;border-radius:18px;margin-bottom:30px}
-.hero h1 {font-size:36px;margin-bottom:12px}
-.hero p {line-height:1.7;max-width:650px}
-.section-title {display:flex;justify-content:space-between;align-items:center;margin:25px 0 15px}
-.search {width:100%;padding:14px;border:1px solid var(--border);border-radius:10px;margin:15px 0 25px;font-size:15px}
-.grid {display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:20px}
-.book {background:white;border-radius:13px;overflow:hidden;box-shadow:0 3px 12px #0000000a}
-.book img {width:100%;height:230px;object-fit:cover;background:#dbeafe}
-.book-info {padding:15px}
-.book h3 {font-size:16px;margin-bottom:8px}
-.book p {font-size:13px;color:var(--gray);margin-bottom:8px}
-.book button {width:100%;margin-top:8px}
-.panel {background:white;padding:22px;border-radius:13px;margin:20px 0;box-shadow:0 3px 12px #00000008}
-.stats {display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:15px;margin:20px 0}
-.stat {background:var(--light);padding:20px;border-radius:12px}
-.stat strong {display:block;font-size:28px;color:var(--primary);margin-top:10px}
-input,textarea,select {width:100%;padding:12px;border:1px solid var(--border);border-radius:8px;margin:7px 0 14px;font:inherit}
-textarea {min-height:90px}
-label {font-size:14px;font-weight:bold}
-.form-grid {display:grid;grid-template-columns:1fr 1fr;gap:12px}
-table {width:100%;border-collapse:collapse;min-width:650px}
-th,td {padding:13px;border-bottom:1px solid var(--border);text-align:left;font-size:14px}
-th {background:var(--light)}
-.table-wrap {overflow-x:auto}
-.hidden {display:none!important}
-.muted {color:var(--gray);font-size:14px}
-.modal {position:fixed;inset:0;background:#0f172acc;display:flex;justify-content:center;align-items:center;z-index:10;padding:15px}
-.modal-box {background:white;padding:25px;border-radius:15px;width:100%;max-width:430px;max-height:90vh;overflow:auto}
-.modal-box h2 {margin-bottom:18px}
-.close {float:right;background:#e2e8f0;color:#172554}
-.status {padding:5px 9px;background:#dbeafe;border-radius:20px;font-size:12px}
-footer {text-align:center;padding:25px;color:var(--gray)}
-@media(max-width:650px) {
- header {align-items:flex-start;flex-direction:column}
- main {padding:20px 4%}
- .hero {padding:28px 20px}
- .hero h1 {font-size:27px}
- .form-grid {grid-template-columns:1fr}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:var(--bg);color:#1e293b}
+button{border:0;padding:11px 16px;border-radius:8px;background:var(--primary);color:white;cursor:pointer;font-weight:bold}
+button:hover{opacity:.85}
+button:disabled{opacity:.5;cursor:not-allowed}
+.secondary{background:#e2e8f0;color:#1e293b}
+.danger{background:var(--danger)}
+header{background:white;padding:18px 6%;display:flex;align-items:center;justify-content:space-between;gap:15px;box-shadow:0 2px 10px #0000000d;position:sticky;top:0;z-index:5}
+.logo{font-size:24px;color:var(--primary);font-weight:bold}
+nav{display:flex;gap:8px;flex-wrap:wrap}
+main{max-width:1400px;margin:auto;padding:30px 6%}
+.hero{background:linear-gradient(120deg,#1e40af,#60a5fa);color:white;padding:48px;border-radius:18px;margin-bottom:30px}
+.hero h1{font-size:36px;margin-bottom:12px}
+.hero p{line-height:1.7;max-width:650px}
+.section-title{display:flex;justify-content:space-between;align-items:center;margin:25px 0 15px}
+.search{width:100%;padding:14px;border:1px solid var(--border);border-radius:10px;margin:15px 0 25px;font-size:15px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:20px}
+.book{background:white;border-radius:13px;overflow:hidden;box-shadow:0 3px 12px #0000000a}
+.book img{width:100%;height:230px;object-fit:cover;background:#dbeafe}
+.book-info{padding:15px}
+.book h3{font-size:16px;margin-bottom:8px}
+.book p{font-size:13px;color:var(--gray);margin-bottom:8px}
+.book button{width:100%;margin-top:8px}
+.panel{background:white;padding:22px;border-radius:13px;margin:20px 0;box-shadow:0 3px 12px #00000008}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:15px;margin:20px 0}
+.stat{background:var(--light);padding:20px;border-radius:12px}
+.stat strong{display:block;font-size:28px;color:var(--primary);margin-top:10px}
+input,textarea,select{width:100%;padding:12px;border:1px solid var(--border);border-radius:8px;margin:7px 0 14px;font:inherit}
+textarea{min-height:90px}
+label{font-size:14px;font-weight:bold}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+table{width:100%;border-collapse:collapse;min-width:650px}
+th,td{padding:13px;border-bottom:1px solid var(--border);text-align:left;font-size:14px}
+th{background:var(--light)}
+.table-wrap{overflow-x:auto}
+.hidden{display:none!important}
+.muted{color:var(--gray);font-size:14px}
+.modal{position:fixed;inset:0;background:#0f172acc;display:flex;justify-content:center;align-items:center;z-index:10;padding:15px}
+.modal-box{background:white;padding:25px;border-radius:15px;width:100%;max-width:430px;max-height:90vh;overflow:auto}
+.modal-box h2{margin-bottom:18px}
+.close{float:right;background:#e2e8f0;color:#172554}
+.status{padding:5px 9px;background:#dbeafe;border-radius:20px;font-size:12px}
+footer{text-align:center;padding:25px;color:var(--gray)}
+.message{padding:15px;background:#eff6ff;border-radius:10px;margin:12px 0;color:#1e40af}
+@media(max-width:650px){
+ header{align-items:flex-start;flex-direction:column}
+ main{padding:20px 4%}
+ .hero{padding:28px 20px}
+ .hero h1{font-size:27px}
+ .form-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
+
 <body>
 
 <header>
@@ -84,16 +88,23 @@ footer {text-align:center;padding:25px;color:var(--gray)}
 </header>
 
 <main>
+
 <section id="catalogPage">
  <div class="hero">
   <h1>Selamat Datang di RuangBaca</h1>
   <p>Perpustakaan digital modern. Temukan buku favoritmu, pinjam dengan mudah, dan kelola riwayat membaca dalam satu tempat.</p>
  </div>
+
  <div class="section-title">
   <h2>Katalog Buku</h2>
-  <span id="bookCount" class="muted"></span>
+  <span id="bookCount" class="muted">Memuat buku...</span>
  </div>
- <input class="search" id="searchInput" placeholder="Cari judul buku atau penulis..." oninput="renderBooks()">
+
+ <input class="search" id="searchInput"
+  placeholder="Cari judul buku atau penulis..."
+  oninput="renderBooks()">
+
+ <div id="catalogMessage" class="message">Menghubungkan ke database...</div>
  <div class="grid" id="bookList"></div>
 </section>
 
@@ -101,7 +112,14 @@ footer {text-align:center;padding:25px;color:var(--gray)}
  <h2>Riwayat Peminjaman</h2>
  <div class="panel table-wrap">
   <table>
-   <thead><tr><th>Buku</th><th>Tanggal Pinjam</th><th>Jatuh Tempo</th><th>Status</th></tr></thead>
+   <thead>
+    <tr>
+     <th>Buku</th>
+     <th>Tanggal Pinjam</th>
+     <th>Jatuh Tempo</th>
+     <th>Status</th>
+    </tr>
+   </thead>
    <tbody id="historyTable"></tbody>
   </table>
  </div>
@@ -122,6 +140,7 @@ footer {text-align:center;padding:25px;color:var(--gray)}
 
 <section id="adminPage" class="hidden">
  <h2>Dashboard Admin</h2>
+
  <div class="stats">
   <div class="stat">Total Buku<strong id="statBooks">0</strong></div>
   <div class="stat">Peminjaman<strong id="statLoans">0</strong></div>
@@ -132,16 +151,32 @@ footer {text-align:center;padding:25px;color:var(--gray)}
  <div class="panel">
   <h3 id="bookFormTitle">Tambah Buku</h3>
   <input type="hidden" id="editBookId">
+
   <div class="form-grid">
-   <div><label>Judul Buku</label><input id="bookTitle" placeholder="Judul buku"></div>
-   <div><label>Penulis</label><input id="bookAuthor" placeholder="Nama penulis"></div>
-   <div><label>Kategori</label><select id="bookCategory"></select></div>
-   <div><label>Stok</label><input id="bookStock" type="number" min="0" value="1"></div>
+   <div>
+    <label>Judul Buku</label>
+    <input id="bookTitle" placeholder="Judul buku">
+   </div>
+   <div>
+    <label>Penulis</label>
+    <input id="bookAuthor" placeholder="Nama penulis">
+   </div>
+   <div>
+    <label>Kategori</label>
+    <select id="bookCategory"></select>
+   </div>
+   <div>
+    <label>Stok</label>
+    <input id="bookStock" type="number" min="0" value="1">
+   </div>
   </div>
+
   <label>Deskripsi</label>
   <textarea id="bookDescription" placeholder="Deskripsi buku"></textarea>
+
   <label>Sampul Buku</label>
   <input id="bookCover" type="file" accept="image/*">
+
   <button onclick="saveBook()">Simpan Buku</button>
   <button class="secondary" onclick="resetBookForm()">Batal</button>
  </div>
@@ -150,7 +185,9 @@ footer {text-align:center;padding:25px;color:var(--gray)}
   <h3>Kelola Buku</h3>
   <div class="table-wrap">
    <table>
-    <thead><tr><th>Judul</th><th>Penulis</th><th>Stok</th><th>Aksi</th></tr></thead>
+    <thead>
+     <tr><th>Judul</th><th>Penulis</th><th>Stok</th><th>Aksi</th></tr>
+    </thead>
     <tbody id="adminBookTable"></tbody>
    </table>
   </div>
@@ -160,12 +197,15 @@ footer {text-align:center;padding:25px;color:var(--gray)}
   <h3>Data Peminjaman</h3>
   <div class="table-wrap">
    <table>
-    <thead><tr><th>Pembaca</th><th>Buku</th><th>Tanggal</th><th>Status</th><th>Aksi</th></tr></thead>
+    <thead>
+     <tr><th>Pembaca</th><th>Buku</th><th>Tanggal</th><th>Status</th><th>Aksi</th></tr>
+    </thead>
     <tbody id="adminLoanTable"></tbody>
    </table>
   </div>
  </div>
 </section>
+
 </main>
 
 <footer>© 2026 RuangBaca - Perpustakaan Digital</footer>
@@ -174,15 +214,20 @@ footer {text-align:center;padding:25px;color:var(--gray)}
  <div class="modal-box">
   <button class="close" onclick="closeAuth()">Tutup</button>
   <h2 id="authTitle">Login RuangBaca</h2>
+
   <div id="registerNameWrap" class="hidden">
    <label>Nama Lengkap</label>
    <input id="registerName" placeholder="Nama lengkap">
   </div>
+
   <label>Email</label>
   <input id="authEmail" type="email" placeholder="email@contoh.com">
+
   <label>Password</label>
   <input id="authPassword" type="password" placeholder="Password">
+
   <button id="authSubmit" onclick="submitAuth()" style="width:100%">Login</button>
+
   <p class="muted" style="margin-top:15px">
    <span id="authSwitchText">Belum punya akun?</span>
    <a href="#" onclick="toggleAuthMode();return false">Daftar / Login</a>
@@ -191,11 +236,12 @@ footer {text-align:center;padding:25px;color:var(--gray)}
 </div>
 
 <script type="module">
+
 /* =====================================
    1. KONFIGURASI SUPABASE
 ===================================== */
 
-const SUPABASE_URL = "ISI_PROJECT_URL_SUPABASE";
+const SUPABASE_URL = "https://coacwzeitndaivdibkja.supabase.co";
 const SUPABASE_KEY = "sb_publishable_SR3CIayOZezcXW3KcXTJ3A_CLOMI1gm";
 
 const { createClient } = supabase;
@@ -211,7 +257,11 @@ const $ = id => document.getElementById(id);
 
 function escapeHTML(value = "") {
  return String(value).replace(/[&<>"']/g, c => ({
-  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+  "&":"&amp;",
+  "<":"&lt;",
+  ">":"&gt;",
+  '"':"&quot;",
+  "'":"&#039;"
  })[c]);
 }
 
@@ -268,6 +318,7 @@ window.toggleAuthMode = () => {
 window.submitAuth = async () => {
  const email = $("authEmail").value.trim();
  const password = $("authPassword").value;
+
  if (!email || !password) return alert("Isi email dan password.");
 
  let result;
@@ -275,8 +326,11 @@ window.submitAuth = async () => {
  if (authMode === "register") {
   const name = $("registerName").value.trim();
   if (!name) return alert("Isi nama lengkap.");
+
   result = await db.auth.signUp({
-   email,password,options:{data:{name}}
+   email,
+   password,
+   options:{data:{name}}
   });
  } else {
   result = await db.auth.signInWithPassword({email,password});
@@ -296,22 +350,31 @@ window.submitAuth = async () => {
 window.logout = async () => {
  const {error} = await db.auth.signOut();
  if (error) return alert(error.message);
+
  currentUser = null;
  currentProfile = null;
+
  updateNavigation();
  showCatalog();
  alert("Berhasil keluar.");
 };
 
 async function refreshSession() {
- const {data} = await db.auth.getSession();
+ const {data,error:sessionError} = await db.auth.getSession();
+
+ if (sessionError) console.error(sessionError);
+
  currentUser = data.session?.user || null;
  currentProfile = null;
 
  if (currentUser) {
   const {data:profile,error} = await db.from("profiles")
-   .select("*").eq("id",currentUser.id).maybeSingle();
-  if (error) console.error(error);
+   .select("*")
+   .eq("id",currentUser.id)
+   .maybeSingle();
+
+  if (error) console.error("Gagal mengambil profil:",error);
+
   currentProfile = profile;
  }
 
@@ -321,6 +384,7 @@ async function refreshSession() {
 
 function updateNavigation() {
  const loggedIn = !!currentUser;
+
  $("loginNav").classList.toggle("hidden",loggedIn);
  $("logoutNav").classList.toggle("hidden",!loggedIn);
  $("historyNav").classList.toggle("hidden",!loggedIn);
@@ -333,22 +397,36 @@ function updateNavigation() {
 ===================================== */
 
 async function loadBooks() {
+ $("catalogMessage").textContent = "Sedang mengambil data buku...";
+ $("catalogMessage").classList.remove("hidden");
+
  const {data,error} = await db.from("books")
   .select("*,categories(name)")
   .order("created_at",{ascending:false});
 
  if (error) {
-  console.error(error);
-  $("bookList").textContent = "Gagal memuat buku. Periksa konfigurasi Supabase.";
+  console.error("Gagal memuat buku:",error);
+  $("catalogMessage").textContent = "Gagal memuat buku: " + error.message;
+  $("bookCount").textContent = "Data gagal dimuat";
+  $("bookList").innerHTML = "";
   return;
  }
 
  books = data || [];
+
+ if (books.length === 0) {
+  $("catalogMessage").textContent = "Belum ada buku di katalog. Tambahkan data buku melalui Supabase atau dashboard admin.";
+  $("bookCount").textContent = "0 buku";
+ } else {
+  $("catalogMessage").classList.add("hidden");
+ }
+
  renderBooks();
 }
 
 window.renderBooks = () => {
  const keyword = $("searchInput").value.toLowerCase();
+
  const filtered = books.filter(book =>
   (book.title || "").toLowerCase().includes(keyword) ||
   (book.author || "").toLowerCase().includes(keyword)
@@ -358,13 +436,18 @@ window.renderBooks = () => {
 
  $("bookList").innerHTML = filtered.map(book => `
   <article class="book">
-   <img src="${escapeHTML(book.cover_url || "https://placehold.co/300x400/e0ecff/2563eb?text=RuangBaca")}" alt="Sampul buku">
+   <img
+    src="${escapeHTML(book.cover_url || "https://placehold.co/300x400/e0ecff/2563eb?text=RuangBaca")}"
+    alt="Sampul buku"
+    onerror="this.src='https://placehold.co/300x400/e0ecff/2563eb?text=RuangBaca'"
+   >
    <div class="book-info">
     <h3>${escapeHTML(book.title)}</h3>
     <p>Penulis: ${escapeHTML(book.author || "-")}</p>
     <p>Kategori: ${escapeHTML(book.categories?.name || "-")}</p>
     <p>Stok: ${Number(book.stock)}</p>
-    <button onclick="borrowBook(${Number(book.id)})"
+    <button
+     onclick="borrowBook(${Number(book.id)})"
      ${Number(book.stock)<1 || !currentUser ? "disabled":""}>
      ${!currentUser?"Login untuk Meminjam":Number(book.stock)<1?"Stok Habis":"Pinjam Buku"}
     </button>
@@ -382,6 +465,7 @@ window.borrowBook = async id => {
  if (!confirm("Pinjam buku ini?")) return;
 
  const {error} = await db.rpc("borrow_book",{p_book_id:id});
+
  if (error) return alert(error.message);
 
  alert("Buku berhasil dipinjam!");
@@ -404,7 +488,7 @@ async function loadHistory() {
    <td>${escapeHTML(loan.due_date || "-")}</td>
    <td><span class="status">${escapeHTML(loan.status)}</span></td>
   </tr>
- `).join("") || "<tr><td colspan='4'>Belum ada riwayat.</td></tr>";
+ `).join("") || "<tr><td colspan="4">Belum ada riwayat.</td></tr>";
 }
 
 /* =====================================
@@ -414,14 +498,18 @@ async function loadHistory() {
 window.saveProfile = async () => {
  const name = $("profileName").value.trim();
  const phone = $("profilePhone").value.trim();
+
  if (!name) return alert("Nama harus diisi.");
 
  const {error} = await db.from("profiles")
-  .update({name,phone}).eq("id",currentUser.id);
+  .update({name,phone})
+  .eq("id",currentUser.id);
 
  if (error) return alert(error.message);
+
  currentProfile.name = name;
  currentProfile.phone = phone;
+
  alert("Profil berhasil diperbarui.");
 };
 
@@ -431,11 +519,17 @@ window.saveProfile = async () => {
 
 async function loadCategories() {
  const {data,error} = await db.from("categories")
-  .select("*").order("name");
+  .select("*")
+  .order("name");
 
- if (error) return alert(error.message);
+ if (error) {
+  console.error(error);
+  alert("Gagal mengambil kategori: " + error.message);
+  return;
+ }
 
  categories = data || [];
+
  $("bookCategory").innerHTML = categories.map(category =>
   `<option value="${Number(category.id)}">${escapeHTML(category.name)}</option>`
  ).join("");
@@ -462,6 +556,7 @@ async function loadAdmin() {
  }
 
  const loans = loanResult.data || [];
+
  $("statBooks").textContent = bookResult.count || 0;
  $("statLoans").textContent = loans.length;
  $("statActive").textContent = loans.filter(x=>x.status==="borrowed").length;
@@ -501,8 +596,11 @@ async function renderAdminLoans() {
    <td>${escapeHTML(loan.books?.title || "-")}</td>
    <td>${escapeHTML(loan.borrowed_at || "-")}</td>
    <td>${escapeHTML(loan.status)}</td>
-   <td>${loan.status==="borrowed"
-    ? `<button onclick="returnBook(${Number(loan.id)})">Kembalikan</button>`:"-"}</td>
+   <td>
+    ${loan.status==="borrowed"
+     ? `<button onclick="returnBook(${Number(loan.id)})">Kembalikan</button>`
+     : "-"}
+   </td>
   </tr>
  `).join("") || "<tr><td colspan='5'>Belum ada peminjaman.</td></tr>";
 }
@@ -553,6 +651,7 @@ window.saveBook = async () => {
  if (result.error) return alert(result.error.message);
 
  alert("Buku berhasil disimpan.");
+
  resetBookForm();
  await loadBooks();
  await loadAdmin();
@@ -570,6 +669,7 @@ window.editBook = id => {
  $("bookCategory").value = book.category_id;
  $("bookFormTitle").textContent = "Edit Buku";
  $("bookCover").value = "";
+
  window.scrollTo({top:0,behavior:"smooth"});
 };
 
@@ -587,7 +687,8 @@ window.deleteBook = async id => {
  if (!confirm("Hapus buku ini? Buku yang memiliki riwayat peminjaman tidak dapat dihapus.")) return;
 
  const {error} = await db.from("books").delete().eq("id",id);
- if (error) return alert("Gagal menghapus: "+error.message);
+
+ if (error) return alert("Gagal menghapus: " + error.message);
 
  alert("Buku berhasil dihapus.");
  await loadBooks();
@@ -603,6 +704,7 @@ window.returnBook = async id => {
  if (!confirm("Konfirmasi buku telah dikembalikan?")) return;
 
  const {error} = await db.rpc("return_book",{p_loan_id:id});
+
  if (error) return alert(error.message);
 
  alert("Buku berhasil dikembalikan.");
@@ -615,19 +717,28 @@ window.returnBook = async id => {
 ===================================== */
 
 async function init() {
+ $("catalogMessage").textContent = "Menghubungkan ke Supabase...";
+
  if (SUPABASE_URL.includes("ISI_")) {
-  $("bookList").textContent = "Masukkan Project URL Supabase terlebih dahulu.";
+  $("catalogMessage").textContent = "Project URL Supabase belum diisi.";
   return;
  }
 
- await refreshSession();
+ try {
+  await refreshSession();
 
- db.auth.onAuthStateChange(() => {
-  setTimeout(() => refreshSession(),0);
- });
+  db.auth.onAuthStateChange(() => {
+   setTimeout(() => refreshSession(),0);
+  });
+
+ } catch(error) {
+  console.error("Kesalahan aplikasi:",error);
+  $("catalogMessage").textContent = "Terjadi kesalahan: " + error.message;
+ }
 }
 
 init();
+
 </script>
 </body>
 </html>
