@@ -4,20 +4,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RuangBaca | Perpustakaan Digital</title>
-
+<title>RuangBaca - Perpustakaan Digital</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 :root {
   --primary:#2563eb;
   --dark:#172554;
-  --light:#eff6ff;
   --bg:#f1f5f9;
-  --white:#fff;
+  --white:#ffffff;
   --gray:#64748b;
   --border:#e2e8f0;
   --danger:#dc2626;
+  --green:#16a34a;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:Arial,sans-serif;background:var(--bg);color:#1e293b}
@@ -26,25 +25,27 @@ button:hover{opacity:.85}
 button:disabled{opacity:.5;cursor:not-allowed}
 .secondary{background:#e2e8f0;color:#1e293b}
 .danger{background:var(--danger)}
-header{background:white;padding:18px 6%;display:flex;align-items:center;justify-content:space-between;gap:15px;box-shadow:0 2px 10px #0000000d;position:sticky;top:0;z-index:5}
-.logo{font-size:24px;color:var(--primary);font-weight:bold}
+.success{background:var(--green)}
+header{background:white;padding:16px 5%;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;box-shadow:0 2px 12px #0000000d;position:sticky;top:0;z-index:5}
+.logo{font-size:24px;font-weight:bold;color:var(--primary)}
 nav{display:flex;gap:8px;flex-wrap:wrap}
-main{max-width:1400px;margin:auto;padding:30px 6%}
-.hero{background:linear-gradient(120deg,#1e40af,#60a5fa);color:white;padding:48px;border-radius:18px;margin-bottom:30px}
-.hero h1{font-size:36px;margin-bottom:12px}
-.hero p{line-height:1.7;max-width:650px}
-.section-title{display:flex;justify-content:space-between;align-items:center;margin:25px 0 15px}
-.search{width:100%;padding:14px;border:1px solid var(--border);border-radius:10px;margin:15px 0 25px;font-size:15px}
+main{max-width:1400px;margin:auto;padding:30px 5%;min-height:75vh}
+.hero{background:linear-gradient(120deg,#1e40af,#60a5fa);color:white;padding:45px;border-radius:18px;margin-bottom:25px}
+.hero h1{font-size:34px;margin-bottom:12px}
+.hero p{line-height:1.7}
+.section-title{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:25px 0 15px}
+.search{width:100%;padding:14px;border:1px solid var(--border);border-radius:10px;margin:15px 0 20px;font-size:15px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:20px}
 .book{background:white;border-radius:13px;overflow:hidden;box-shadow:0 3px 12px #0000000a}
-.book img{width:100%;height:230px;object-fit:cover;background:#dbeafe}
+.book img{width:100%;height:235px;object-fit:cover;background:#dbeafe}
 .book-info{padding:15px}
 .book h3{font-size:16px;margin-bottom:8px}
 .book p{font-size:13px;color:var(--gray);margin-bottom:8px}
 .book button{width:100%;margin-top:8px}
 .panel{background:white;padding:22px;border-radius:13px;margin:20px 0;box-shadow:0 3px 12px #00000008}
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:15px;margin:20px 0}
-.stat{background:var(--light);padding:20px;border-radius:12px}
+.stat{background:#eff6ff;padding:20px;border-radius:12px}
+.stat span{color:var(--gray);font-size:14px}
 .stat strong{display:block;font-size:28px;color:var(--primary);margin-top:10px}
 input,textarea,select{width:100%;padding:12px;border:1px solid var(--border);border-radius:8px;margin:7px 0 14px;font:inherit}
 textarea{min-height:90px}
@@ -52,7 +53,7 @@ label{font-size:14px;font-weight:bold}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 table{width:100%;border-collapse:collapse;min-width:650px}
 th,td{padding:13px;border-bottom:1px solid var(--border);text-align:left;font-size:14px}
-th{background:var(--light)}
+th{background:#eff6ff}
 .table-wrap{overflow-x:auto}
 .hidden{display:none!important}
 .muted{color:var(--gray);font-size:14px}
@@ -61,14 +62,18 @@ th{background:var(--light)}
 .modal-box h2{margin-bottom:18px}
 .close{float:right;background:#e2e8f0;color:#172554}
 .status{padding:5px 9px;background:#dbeafe;border-radius:20px;font-size:12px}
+.message{padding:14px;background:#eff6ff;border-radius:9px;color:#1e40af;margin:12px 0}
+.profile-card{display:flex;align-items:center;gap:15px}
+.avatar{width:60px;height:60px;border-radius:50%;background:#dbeafe;color:#2563eb;display:flex;align-items:center;justify-content:center;font-size:25px;font-weight:bold}
 footer{text-align:center;padding:25px;color:var(--gray)}
-.message{padding:15px;background:#eff6ff;border-radius:10px;margin:12px 0;color:#1e40af}
+h2{margin-bottom:10px}
 @media(max-width:650px){
  header{align-items:flex-start;flex-direction:column}
  main{padding:20px 4%}
  .hero{padding:28px 20px}
- .hero h1{font-size:27px}
+ .hero h1{font-size:26px}
  .form-grid{grid-template-columns:1fr}
+ nav button{font-size:12px;padding:9px}
 }
 </style>
 </head>
@@ -79,6 +84,7 @@ footer{text-align:center;padding:25px;color:var(--gray)}
  <div class="logo">📚 RuangBaca</div>
  <nav>
   <button class="secondary" onclick="showCatalog()">Beranda</button>
+  <button class="secondary hidden" id="dashboardNav" onclick="showDashboard()">Dashboard</button>
   <button class="secondary hidden" id="historyNav" onclick="showHistory()">Riwayat</button>
   <button class="secondary hidden" id="profileNav" onclick="showProfile()">Profil</button>
   <button class="secondary hidden" id="adminNav" onclick="showAdmin()">Admin</button>
@@ -89,67 +95,106 @@ footer{text-align:center;padding:25px;color:var(--gray)}
 
 <main>
 
+<!-- HALAMAN KATALOG -->
 <section id="catalogPage">
  <div class="hero">
-  <h1>Selamat Datang di RuangBaca</h1>
-  <p>Perpustakaan digital modern. Temukan buku favoritmu, pinjam dengan mudah, dan kelola riwayat membaca dalam satu tempat.</p>
+  <h1>Selamat Datang di RuangBaca 📚</h1>
+  <p>Temukan buku favoritmu, perluas wawasan, dan nikmati pengalaman membaca melalui perpustakaan digital.</p>
+  <br>
+  <button onclick="openAuth()" style="background:white;color:#1e40af">Mulai Membaca</button>
  </div>
 
  <div class="section-title">
   <h2>Katalog Buku</h2>
-  <span id="bookCount" class="muted">Memuat buku...</span>
+  <span id="bookCount" class="muted">Memuat...</span>
  </div>
 
- <input class="search" id="searchInput"
-  placeholder="Cari judul buku atau penulis..."
-  oninput="renderBooks()">
+ <input class="search" id="searchInput" placeholder="Cari judul atau penulis buku..." oninput="renderBooks()">
 
  <div id="catalogMessage" class="message">Menghubungkan ke database...</div>
  <div class="grid" id="bookList"></div>
 </section>
 
+<!-- DASHBOARD PEMBACA -->
+<section id="readerDashboard" class="hidden">
+ <h2>Dashboard Pembaca</h2>
+ <p class="muted">Selamat datang di dashboard RuangBaca.</p>
+
+ <div class="panel profile-card">
+  <div class="avatar" id="readerAvatar">P</div>
+  <div>
+   <h3 id="readerWelcome">Pembaca</h3>
+   <p class="muted" id="readerEmail"></p>
+   <span class="status">Pembaca</span>
+  </div>
+ </div>
+
+ <div class="stats">
+  <div class="stat"><span>Total Buku</span><strong id="readerTotalBooks">0</strong></div>
+  <div class="stat"><span>Peminjaman Aktif</span><strong id="readerActiveLoans">0</strong></div>
+  <div class="stat"><span>Total Riwayat</span><strong id="readerHistoryCount">0</strong></div>
+ </div>
+
+ <div class="panel">
+  <div class="section-title">
+   <h3>Peminjaman Terbaru</h3>
+   <button onclick="showHistory()">Lihat Semua</button>
+  </div>
+  <div class="table-wrap">
+   <table>
+    <thead><tr><th>Buku</th><th>Tanggal Pinjam</th><th>Jatuh Tempo</th><th>Status</th></tr></thead>
+    <tbody id="readerRecentLoans"></tbody>
+   </table>
+  </div>
+ </div>
+
+ <button onclick="showCatalog()">Jelajahi Katalog Buku</button>
+</section>
+
+<!-- RIWAYAT -->
 <section id="historyPage" class="hidden">
  <h2>Riwayat Peminjaman</h2>
  <div class="panel table-wrap">
   <table>
    <thead>
-    <tr>
-     <th>Buku</th>
-     <th>Tanggal Pinjam</th>
-     <th>Jatuh Tempo</th>
-     <th>Status</th>
-    </tr>
+    <tr><th>Buku</th><th>Tanggal Pinjam</th><th>Jatuh Tempo</th><th>Status</th></tr>
    </thead>
    <tbody id="historyTable"></tbody>
   </table>
  </div>
 </section>
 
+<!-- PROFIL -->
 <section id="profilePage" class="hidden">
  <h2>Profil Saya</h2>
  <div class="panel">
   <label>Nama Lengkap</label>
   <input id="profileName" placeholder="Nama lengkap">
+
   <label>Nomor Telepon</label>
   <input id="profilePhone" placeholder="Nomor telepon">
+
   <label>Email</label>
   <input id="profileEmail" disabled>
+
   <button onclick="saveProfile()">Simpan Profil</button>
  </div>
 </section>
 
+<!-- DASHBOARD ADMIN -->
 <section id="adminPage" class="hidden">
- <h2>Dashboard Admin</h2>
+ <h2>Dashboard Administrator</h2>
+ <p class="muted">Kelola koleksi buku dan aktivitas peminjaman.</p>
 
  <div class="stats">
-  <div class="stat">Total Buku<strong id="statBooks">0</strong></div>
-  <div class="stat">Peminjaman<strong id="statLoans">0</strong></div>
-  <div class="stat">Peminjaman Aktif<strong id="statActive">0</strong></div>
-  <div class="stat">Total Pembaca<strong id="statReaders">0</strong></div>
+  <div class="stat"><span>Total Buku</span><strong id="statBooks">0</strong></div>
+  <div class="stat"><span>Total Peminjaman</span><strong id="statLoans">0</strong></div>
+  <div class="stat"><span>Peminjaman Aktif</span><strong id="statActive">0</strong></div>
+  <div class="stat"><span>Total Pembaca</span><strong id="statReaders">0</strong></div>
  </div>
 
  <div class="panel">
-  <h3 id="bookFormTitle">Tambah Buku</h3>
+  <h3 id="bookFormTitle">Tambah Buku Baru</h3>
   <input type="hidden" id="editBookId">
 
   <div class="form-grid">
@@ -182,24 +227,20 @@ footer{text-align:center;padding:25px;color:var(--gray)}
  </div>
 
  <div class="panel">
-  <h3>Kelola Buku</h3>
+  <h3>Kelola Koleksi Buku</h3>
   <div class="table-wrap">
    <table>
-    <thead>
-     <tr><th>Judul</th><th>Penulis</th><th>Stok</th><th>Aksi</th></tr>
-    </thead>
+    <thead><tr><th>Judul</th><th>Penulis</th><th>Stok</th><th>Aksi</th></tr></thead>
     <tbody id="adminBookTable"></tbody>
    </table>
   </div>
  </div>
 
  <div class="panel">
-  <h3>Data Peminjaman</h3>
+  <h3>Kelola Peminjaman</h3>
   <div class="table-wrap">
    <table>
-    <thead>
-     <tr><th>Pembaca</th><th>Buku</th><th>Tanggal</th><th>Status</th><th>Aksi</th></tr>
-    </thead>
+    <thead><tr><th>Pembaca</th><th>Buku</th><th>Tanggal</th><th>Status</th><th>Aksi</th></tr></thead>
     <tbody id="adminLoanTable"></tbody>
    </table>
   </div>
@@ -208,8 +249,9 @@ footer{text-align:center;padding:25px;color:var(--gray)}
 
 </main>
 
-<footer>© 2026 RuangBaca - Perpustakaan Digital</footer>
+<footer>© 2026 RuangBaca | Perpustakaan Digital</footer>
 
+<!-- MODAL LOGIN -->
 <div id="authModal" class="modal hidden">
  <div class="modal-box">
   <button class="close" onclick="closeAuth()">Tutup</button>
@@ -238,7 +280,7 @@ footer{text-align:center;padding:25px;color:var(--gray)}
 <script type="module">
 
 /* =====================================
-   1. KONFIGURASI SUPABASE
+   KONFIGURASI SUPABASE
 ===================================== */
 
 const SUPABASE_URL = "https://coacwzeitndaivdibkja.supabase.co";
@@ -257,27 +299,43 @@ const $ = id => document.getElementById(id);
 
 function escapeHTML(value = "") {
  return String(value).replace(/[&<>"']/g, c => ({
-  "&":"&amp;",
-  "<":"&lt;",
-  ">":"&gt;",
-  '"':"&quot;",
-  "'":"&#039;"
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
  })[c]);
 }
 
+function formatDate(value) {
+ if (!value) return "-";
+ return new Date(value).toLocaleDateString("id-ID");
+}
+
 /* =====================================
-   2. NAVIGASI
+   NAVIGASI
 ===================================== */
 
 function showPage(page) {
- ["catalogPage","historyPage","profilePage","adminPage"].forEach(id => {
-  $(id).classList.toggle("hidden",id !== page);
- });
+ [
+  "catalogPage",
+  "readerDashboard",
+  "historyPage",
+  "profilePage",
+  "adminPage"
+ ].forEach(id => $(id).classList.toggle("hidden",id !== page));
 }
 
 window.showCatalog = () => {
  showPage("catalogPage");
  renderBooks();
+};
+
+window.showDashboard = async () => {
+ if (!currentUser) return openAuth();
+
+ if (currentProfile?.role === "admin") {
+  return showAdmin();
+ }
+
+ showPage("readerDashboard");
+ await loadReaderDashboard();
 };
 
 window.showHistory = async () => {
@@ -288,6 +346,7 @@ window.showHistory = async () => {
 
 window.showProfile = () => {
  if (!currentUser) return openAuth();
+
  showPage("profilePage");
  $("profileName").value = currentProfile?.name || "";
  $("profilePhone").value = currentProfile?.phone || "";
@@ -295,13 +354,16 @@ window.showProfile = () => {
 };
 
 window.showAdmin = async () => {
- if (currentProfile?.role !== "admin") return alert("Akses ditolak.");
+ if (currentProfile?.role !== "admin") {
+  return alert("Akses ditolak. Halaman ini khusus admin.");
+ }
+
  showPage("adminPage");
  await loadAdmin();
 };
 
 /* =====================================
-   3. LOGIN DAN REGISTER
+   LOGIN DAN REGISTER
 ===================================== */
 
 window.openAuth = () => $("authModal").classList.remove("hidden");
@@ -309,10 +371,19 @@ window.closeAuth = () => $("authModal").classList.add("hidden");
 
 window.toggleAuthMode = () => {
  authMode = authMode === "login" ? "register" : "login";
- $("authTitle").textContent = authMode === "login" ? "Login RuangBaca" : "Daftar Akun";
- $("authSubmit").textContent = authMode === "login" ? "Login" : "Daftar";
- $("registerNameWrap").classList.toggle("hidden",authMode !== "register");
- $("authSwitchText").textContent = authMode === "login" ? "Belum punya akun?" : "Sudah punya akun?";
+
+ $("authTitle").textContent =
+  authMode === "login" ? "Login RuangBaca" : "Daftar Akun";
+
+ $("authSubmit").textContent =
+  authMode === "login" ? "Login" : "Daftar";
+
+ $("registerNameWrap").classList.toggle(
+  "hidden",authMode !== "register"
+ );
+
+ $("authSwitchText").textContent =
+  authMode === "login" ? "Belum punya akun?" : "Sudah punya akun?";
 };
 
 window.submitAuth = async () => {
@@ -323,32 +394,40 @@ window.submitAuth = async () => {
 
  let result;
 
- if (authMode === "register") {
-  const name = $("registerName").value.trim();
-  if (!name) return alert("Isi nama lengkap.");
+ try {
+  if (authMode === "register") {
+   const name = $("registerName").value.trim();
+   if (!name) return alert("Isi nama lengkap.");
 
-  result = await db.auth.signUp({
-   email,
-   password,
-   options:{data:{name}}
-  });
- } else {
-  result = await db.auth.signInWithPassword({email,password});
+   result = await db.auth.signUp({
+    email,
+    password,
+    options:{data:{name}}
+   });
+  } else {
+   result = await db.auth.signInWithPassword({email,password});
+  }
+
+  if (result.error) return alert(result.error.message);
+
+  if (authMode === "register" && !result.data.session) {
+   return alert("Pendaftaran berhasil. Periksa email untuk konfirmasi sebelum login.");
+  }
+
+  closeAuth();
+  await refreshSession();
+
+  alert("Berhasil masuk ke RuangBaca!");
+  await showDashboard();
+
+ } catch(error) {
+  alert("Terjadi kesalahan: " + error.message);
  }
-
- if (result.error) return alert(result.error.message);
-
- if (authMode === "register" && !result.data.session) {
-  return alert("Pendaftaran berhasil. Periksa email untuk konfirmasi, lalu login.");
- }
-
- closeAuth();
- await refreshSession();
- alert("Berhasil masuk!");
 };
 
 window.logout = async () => {
  const {error} = await db.auth.signOut();
+
  if (error) return alert(error.message);
 
  currentUser = null;
@@ -356,24 +435,35 @@ window.logout = async () => {
 
  updateNavigation();
  showCatalog();
+
  alert("Berhasil keluar.");
 };
 
-async function refreshSession() {
- const {data,error:sessionError} = await db.auth.getSession();
+/* =====================================
+   SESSION DAN PROFIL
+===================================== */
 
- if (sessionError) console.error(sessionError);
+async function refreshSession() {
+ const {data,error} = await db.auth.getSession();
+
+ if (error) {
+  console.error(error);
+  return;
+ }
 
  currentUser = data.session?.user || null;
  currentProfile = null;
 
  if (currentUser) {
-  const {data:profile,error} = await db.from("profiles")
+  const {data:profile,error:profileError} = await db
+   .from("profiles")
    .select("*")
    .eq("id",currentUser.id)
    .maybeSingle();
 
-  if (error) console.error("Gagal mengambil profil:",error);
+  if (profileError) {
+   console.error("Profil:",profileError);
+  }
 
   currentProfile = profile;
  }
@@ -384,44 +474,53 @@ async function refreshSession() {
 
 function updateNavigation() {
  const loggedIn = !!currentUser;
+ const admin = currentProfile?.role === "admin";
 
  $("loginNav").classList.toggle("hidden",loggedIn);
  $("logoutNav").classList.toggle("hidden",!loggedIn);
+ $("dashboardNav").classList.toggle("hidden",!loggedIn);
  $("historyNav").classList.toggle("hidden",!loggedIn);
  $("profileNav").classList.toggle("hidden",!loggedIn);
- $("adminNav").classList.toggle("hidden",currentProfile?.role !== "admin");
+ $("adminNav").classList.toggle("hidden",!admin);
 }
 
 /* =====================================
-   4. KATALOG DAN PENCARIAN
+   KATALOG BUKU
 ===================================== */
 
 async function loadBooks() {
- $("catalogMessage").textContent = "Sedang mengambil data buku...";
+ $("catalogMessage").textContent = "Menghubungkan ke database...";
  $("catalogMessage").classList.remove("hidden");
 
- const {data,error} = await db.from("books")
-  .select("*,categories(name)")
-  .order("created_at",{ascending:false});
+ try {
+  const {data,error} = await db
+   .from("books")
+   .select("*,categories(name)")
+   .order("created_at",{ascending:false});
 
- if (error) {
-  console.error("Gagal memuat buku:",error);
-  $("catalogMessage").textContent = "Gagal memuat buku: " + error.message;
-  $("bookCount").textContent = "Data gagal dimuat";
-  $("bookList").innerHTML = "";
-  return;
+  if (error) {
+   console.error("Katalog:",error);
+   $("catalogMessage").textContent =
+    "Gagal memuat buku: " + error.message;
+   $("bookCount").textContent = "Gagal";
+   return;
+  }
+
+  books = data || [];
+
+  if (books.length === 0) {
+   $("catalogMessage").textContent =
+    "Belum ada buku. Silakan tambahkan buku melalui dashboard admin atau Supabase.";
+  } else {
+   $("catalogMessage").classList.add("hidden");
+  }
+
+  renderBooks();
+
+ } catch(error) {
+  console.error(error);
+  $("catalogMessage").textContent = "Koneksi gagal: " + error.message;
  }
-
- books = data || [];
-
- if (books.length === 0) {
-  $("catalogMessage").textContent = "Belum ada buku di katalog. Tambahkan data buku melalui Supabase atau dashboard admin.";
-  $("bookCount").textContent = "0 buku";
- } else {
-  $("catalogMessage").classList.add("hidden");
- }
-
- renderBooks();
 }
 
 window.renderBooks = () => {
@@ -449,7 +548,8 @@ window.renderBooks = () => {
     <button
      onclick="borrowBook(${Number(book.id)})"
      ${Number(book.stock)<1 || !currentUser ? "disabled":""}>
-     ${!currentUser?"Login untuk Meminjam":Number(book.stock)<1?"Stok Habis":"Pinjam Buku"}
+     ${!currentUser ? "Login untuk Meminjam" :
+       Number(book.stock)<1 ? "Stok Habis" : "Pinjam Buku"}
     </button>
    </div>
   </article>
@@ -457,86 +557,148 @@ window.renderBooks = () => {
 };
 
 /* =====================================
-   5. PEMINJAMAN
+   DASHBOARD PEMBACA
 ===================================== */
 
-window.borrowBook = async id => {
- if (!currentUser) return openAuth();
- if (!confirm("Pinjam buku ini?")) return;
+async function loadReaderDashboard() {
+ if (!currentUser) return;
 
- const {error} = await db.rpc("borrow_book",{p_book_id:id});
+ $("readerWelcome").textContent =
+  "Halo, " + (currentProfile?.name || "Pembaca");
 
- if (error) return alert(error.message);
+ $("readerEmail").textContent = currentUser.email || "-";
+ $("readerAvatar").textContent =
+  (currentProfile?.name || "P").charAt(0).toUpperCase();
 
- alert("Buku berhasil dipinjam!");
- await loadBooks();
- await loadHistory();
-};
+ $("readerTotalBooks").textContent = books.length;
 
-async function loadHistory() {
- const {data,error} = await db.from("loans")
+ const {data,error} = await db
+  .from("loans")
   .select("*,books(title)")
   .eq("user_id",currentUser.id)
   .order("borrowed_at",{ascending:false});
 
- if (error) return alert(error.message);
+ if (error) {
+  console.error(error);
+  alert("Gagal memuat dashboard pembaca: " + error.message);
+  return;
+ }
+
+ const loans = data || [];
+
+ $("readerActiveLoans").textContent =
+  loans.filter(x=>x.status==="borrowed").length;
+
+ $("readerHistoryCount").textContent = loans.length;
+
+ $("readerRecentLoans").innerHTML = loans.slice(0,5).map(loan => `
+  <tr>
+   <td>${escapeHTML(loan.books?.title || "-")}</td>
+   <td>${formatDate(loan.borrowed_at)}</td>
+   <td>${formatDate(loan.due_date)}</td>
+   <td><span class="status">${escapeHTML(loan.status)}</span></td>
+  </tr>
+ `).join("") ||
+ "<tr><td colspan='4'>Belum ada peminjaman.</td></tr>";
+}
+
+/* =====================================
+   PEMINJAMAN
+===================================== */
+
+window.borrowBook = async id => {
+ if (!currentUser) return openAuth();
+
+ if (!confirm("Apakah kamu ingin meminjam buku ini?")) return;
+
+ const {error} = await db.rpc("borrow_book",{
+  p_book_id:id
+ });
+
+ if (error) {
+  alert("Peminjaman gagal: " + error.message);
+  return;
+ }
+
+ alert("Buku berhasil dipinjam!");
+
+ await loadBooks();
+ await loadReaderDashboard();
+};
+
+async function loadHistory() {
+ const {data,error} = await db
+  .from("loans")
+  .select("*,books(title)")
+  .eq("user_id",currentUser.id)
+  .order("borrowed_at",{ascending:false});
+
+ if (error) {
+  alert(error.message);
+  return;
+ }
 
  $("historyTable").innerHTML = (data || []).map(loan => `
   <tr>
    <td>${escapeHTML(loan.books?.title || "-")}</td>
-   <td>${escapeHTML(loan.borrowed_at || "-")}</td>
-   <td>${escapeHTML(loan.due_date || "-")}</td>
+   <td>${formatDate(loan.borrowed_at)}</td>
+   <td>${formatDate(loan.due_date)}</td>
    <td><span class="status">${escapeHTML(loan.status)}</span></td>
   </tr>
- `).join("") || "<tr><td colspan="4">Belum ada riwayat.</td></tr>";
+ `).join("") ||
+ "<tr><td colspan='4'>Belum ada riwayat peminjaman.</td></tr>";
 }
 
 /* =====================================
-   6. PROFIL
+   PROFIL PEMBACA
 ===================================== */
 
 window.saveProfile = async () => {
+ if (!currentUser) return;
+
  const name = $("profileName").value.trim();
  const phone = $("profilePhone").value.trim();
 
  if (!name) return alert("Nama harus diisi.");
 
- const {error} = await db.from("profiles")
+ const {error} = await db
+  .from("profiles")
   .update({name,phone})
   .eq("id",currentUser.id);
 
  if (error) return alert(error.message);
 
- currentProfile.name = name;
- currentProfile.phone = phone;
+ currentProfile = {...currentProfile,name,phone};
 
- alert("Profil berhasil diperbarui.");
+ alert("Profil berhasil diperbarui!");
 };
 
 /* =====================================
-   7. KATEGORI
+   KATEGORI
 ===================================== */
 
 async function loadCategories() {
- const {data,error} = await db.from("categories")
+ const {data,error} = await db
+  .from("categories")
   .select("*")
   .order("name");
 
  if (error) {
-  console.error(error);
   alert("Gagal mengambil kategori: " + error.message);
   return;
  }
 
  categories = data || [];
 
- $("bookCategory").innerHTML = categories.map(category =>
-  `<option value="${Number(category.id)}">${escapeHTML(category.name)}</option>`
- ).join("");
+ $("bookCategory").innerHTML = categories.map(category => `
+  <option value="${Number(category.id)}">
+   ${escapeHTML(category.name)}
+  </option>
+ `).join("");
 }
 
 /* =====================================
-   8. DASHBOARD ADMIN
+   DASHBOARD ADMIN
 ===================================== */
 
 async function loadAdmin() {
@@ -547,11 +709,13 @@ async function loadAdmin() {
  const [bookResult,loanResult,readerResult] = await Promise.all([
   db.from("books").select("id",{count:"exact",head:true}),
   db.from("loans").select("id,status"),
-  db.from("profiles").select("id",{count:"exact",head:true}).eq("role","reader")
+  db.from("profiles").select("id",{count:"exact",head:true})
+   .eq("role","reader")
  ]);
 
  if (bookResult.error || loanResult.error || readerResult.error) {
   console.error(bookResult.error || loanResult.error || readerResult.error);
+  alert("Gagal memuat statistik admin. Periksa izin database.");
   return;
  }
 
@@ -559,7 +723,8 @@ async function loadAdmin() {
 
  $("statBooks").textContent = bookResult.count || 0;
  $("statLoans").textContent = loans.length;
- $("statActive").textContent = loans.filter(x=>x.status==="borrowed").length;
+ $("statActive").textContent =
+  loans.filter(x=>x.status==="borrowed").length;
  $("statReaders").textContent = readerResult.count || 0;
 
  renderAdminBooks();
@@ -577,16 +742,19 @@ function renderAdminBooks() {
     <button class="danger" onclick="deleteBook(${Number(book.id)})">Hapus</button>
    </td>
   </tr>
- `).join("") || "<tr><td colspan='4'>Belum ada buku.</td></tr>";
+ `).join("") ||
+ "<tr><td colspan='4'>Belum ada buku.</td></tr>";
 }
 
 async function renderAdminLoans() {
- const {data,error} = await db.from("loans")
+ const {data,error} = await db
+  .from("loans")
   .select("*,books(title),profiles(name,email)")
   .order("borrowed_at",{ascending:false});
 
  if (error) {
   console.error(error);
+  alert("Gagal mengambil data peminjaman: " + error.message);
   return;
  }
 
@@ -594,7 +762,7 @@ async function renderAdminLoans() {
   <tr>
    <td>${escapeHTML(loan.profiles?.name || loan.profiles?.email || "-")}</td>
    <td>${escapeHTML(loan.books?.title || "-")}</td>
-   <td>${escapeHTML(loan.borrowed_at || "-")}</td>
+   <td>${formatDate(loan.borrowed_at)}</td>
    <td>${escapeHTML(loan.status)}</td>
    <td>
     ${loan.status==="borrowed"
@@ -602,15 +770,18 @@ async function renderAdminLoans() {
      : "-"}
    </td>
   </tr>
- `).join("") || "<tr><td colspan='5'>Belum ada peminjaman.</td></tr>";
+ `).join("") ||
+ "<tr><td colspan='5'>Belum ada peminjaman.</td></tr>";
 }
 
 /* =====================================
-   9. TAMBAH DAN EDIT BUKU
+   TAMBAH DAN EDIT BUKU
 ===================================== */
 
 window.saveBook = async () => {
- if (currentProfile?.role !== "admin") return alert("Akses ditolak.");
+ if (currentProfile?.role !== "admin") {
+  return alert("Hanya admin yang dapat mengelola buku.");
+ }
 
  const id = $("editBookId").value;
  const title = $("bookTitle").value.trim();
@@ -620,37 +791,56 @@ window.saveBook = async () => {
  const description = $("bookDescription").value.trim();
  const file = $("bookCover").files[0];
 
- if (!title || !author || !category_id) return alert("Lengkapi data buku.");
- if (!Number.isInteger(stock) || stock < 0) return alert("Stok tidak valid.");
+ if (!title || !author || !category_id) {
+  return alert("Lengkapi data buku.");
+ }
+
+ if (!Number.isInteger(stock) || stock < 0) {
+  return alert("Stok tidak valid.");
+ }
 
  let cover_url = id
   ? books.find(b=>String(b.id)===id)?.cover_url || null
   : null;
 
  if (file) {
-  if (!file.type.startsWith("image/")) return alert("File harus berupa gambar.");
-  if (file.size > 3*1024*1024) return alert("Ukuran maksimal 3 MB.");
+  if (!file.type.startsWith("image/")) {
+   return alert("File harus berupa gambar.");
+  }
+
+  if (file.size > 3*1024*1024) {
+   return alert("Ukuran gambar maksimal 3 MB.");
+  }
 
   const extension = file.name.split(".").pop().toLowerCase();
   const path = `${crypto.randomUUID()}.${extension}`;
 
-  const {error:uploadError} = await db.storage.from("book-covers")
-   .upload(path,file,{upsert:false});
+  const {error:uploadError} = await db.storage
+   .from("book-covers")
+   .upload(path,file);
 
-  if (uploadError) return alert(uploadError.message);
+  if (uploadError) {
+   return alert("Upload sampul gagal: " + uploadError.message);
+  }
 
-  cover_url = db.storage.from("book-covers").getPublicUrl(path).data.publicUrl;
+  cover_url = db.storage
+   .from("book-covers")
+   .getPublicUrl(path).data.publicUrl;
  }
 
- const payload = {title,author,category_id,stock,description,cover_url};
+ const payload = {
+  title,author,category_id,stock,description,cover_url
+ };
 
  const result = id
   ? await db.from("books").update(payload).eq("id",id)
   : await db.from("books").insert(payload);
 
- if (result.error) return alert(result.error.message);
+ if (result.error) {
+  return alert("Gagal menyimpan buku: " + result.error.message);
+ }
 
- alert("Buku berhasil disimpan.");
+ alert("Buku berhasil disimpan!");
 
  resetBookForm();
  await loadBooks();
@@ -680,15 +870,17 @@ window.resetBookForm = () => {
  $("bookStock").value = 1;
  $("bookDescription").value = "";
  $("bookCover").value = "";
- $("bookFormTitle").textContent = "Tambah Buku";
+ $("bookFormTitle").textContent = "Tambah Buku Baru";
 };
 
 window.deleteBook = async id => {
- if (!confirm("Hapus buku ini? Buku yang memiliki riwayat peminjaman tidak dapat dihapus.")) return;
+ if (!confirm("Yakin ingin menghapus buku ini?")) return;
 
  const {error} = await db.from("books").delete().eq("id",id);
 
- if (error) return alert("Gagal menghapus: " + error.message);
+ if (error) {
+  return alert("Gagal menghapus buku: " + error.message);
+ }
 
  alert("Buku berhasil dihapus.");
  await loadBooks();
@@ -696,44 +888,55 @@ window.deleteBook = async id => {
 };
 
 /* =====================================
-   10. PENGEMBALIAN
+   PENGEMBALIAN BUKU
 ===================================== */
 
 window.returnBook = async id => {
- if (currentProfile?.role !== "admin") return alert("Akses ditolak.");
- if (!confirm("Konfirmasi buku telah dikembalikan?")) return;
+ if (currentProfile?.role !== "admin") return;
 
- const {error} = await db.rpc("return_book",{p_loan_id:id});
+ if (!confirm("Konfirmasi buku sudah dikembalikan?")) return;
 
- if (error) return alert(error.message);
+ const {error} = await db.rpc("return_book",{
+  p_loan_id:id
+ });
+
+ if (error) {
+  return alert("Pengembalian gagal: " + error.message);
+ }
 
  alert("Buku berhasil dikembalikan.");
+
  await loadBooks();
  await loadAdmin();
 };
 
 /* =====================================
-   11. JALANKAN APLIKASI
+   INISIALISASI APLIKASI
 ===================================== */
 
 async function init() {
- $("catalogMessage").textContent = "Menghubungkan ke Supabase...";
-
- if (SUPABASE_URL.includes("ISI_")) {
-  $("catalogMessage").textContent = "Project URL Supabase belum diisi.";
-  return;
- }
-
  try {
+  $("catalogMessage").textContent = "Menghubungkan ke database...";
+
+  const {error} = await db.from("books").select("id").limit(1);
+
+  if (error) {
+   console.error("Tes database:",error);
+   $("catalogMessage").textContent =
+    "Database belum dapat dibaca: " + error.message;
+   return;
+  }
+
   await refreshSession();
 
   db.auth.onAuthStateChange(() => {
-   setTimeout(() => refreshSession(),0);
+   setTimeout(() => refreshSession(),100);
   });
 
  } catch(error) {
   console.error("Kesalahan aplikasi:",error);
-  $("catalogMessage").textContent = "Terjadi kesalahan: " + error.message;
+  $("catalogMessage").textContent =
+   "Koneksi gagal: " + error.message;
  }
 }
 
